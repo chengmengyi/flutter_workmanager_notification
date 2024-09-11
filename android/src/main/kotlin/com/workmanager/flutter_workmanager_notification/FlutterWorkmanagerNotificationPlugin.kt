@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.work.*
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -90,13 +91,13 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
                     result.success(true)
                     return
                 }
-//                mActivity?.let {
-//                    ActivityCompat.requestPermissions(
-//                        it,
-//                        arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-//                      1000
-//                    )
-//                }
+                mActivity?.let {
+                    ActivityCompat.requestPermissions(
+                        it,
+                        arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                      1000
+                    )
+                }
             }
         }
     }

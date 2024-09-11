@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:flutter_workmanager_notification/flutter_workmanager_notification.dart';
 import 'package:flutter_workmanager_notification/notification_observer.dart';
 import 'package:permission_handler/permission_handler.dart';

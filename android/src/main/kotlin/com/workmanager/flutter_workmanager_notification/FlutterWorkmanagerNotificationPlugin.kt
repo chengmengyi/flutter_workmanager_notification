@@ -1,23 +1,19 @@
 package com.workmanager.flutter_workmanager_notification
 
-import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.work.*
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
-import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.PluginRegistry
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 lateinit var mApplicationContext:Context
@@ -25,6 +21,7 @@ lateinit var mApplicationContext:Context
 class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, PluginRegistry.NewIntentListener, ActivityAware,PluginRegistry.RequestPermissionsResultListener  {
   private lateinit var channel : MethodChannel
   private var mActivity:Activity?=null
+
 
   override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
       channel = MethodChannel(flutterPluginBinding.binaryMessenger, "flutter_workmanager_notification")
@@ -93,14 +90,13 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
                     result.success(true)
                     return
                 }
-                mActivity?.let {
-                    ActivityCompat.requestPermissions(
-                        it,
-                        arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-                      1000
-                    )
-                }
-
+//                mActivity?.let {
+//                    ActivityCompat.requestPermissions(
+//                        it,
+//                        arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+//                      1000
+//                    )
+//                }
             }
         }
     }
@@ -127,6 +123,7 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         binding.addOnNewIntentListener(this)
+        binding.addRequestPermissionsResultListener(this)
         mActivity=binding.activity
     }
 
@@ -136,6 +133,7 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
         binding.addOnNewIntentListener(this)
+        binding.addRequestPermissionsResultListener(this)
         mActivity=binding.activity
     }
 

@@ -35,4 +35,5 @@ abstract class FlutterWorkmanagerNotificationPlatform extends PlatformInterface 
   Future<void> startForegroundService(int id,String title, String desc) => _instance.startForegroundService(id,title,desc);
 
   Future<bool> requestNotificationPermission() => _instance.requestNotificationPermission();
+  Future<bool> checkNotificationPermission() => _instance.checkNotificationPermission();
 }

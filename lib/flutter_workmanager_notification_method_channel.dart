@@ -43,4 +43,9 @@ class MethodChannelFlutterWorkmanagerNotification extends FlutterWorkmanagerNoti
   Future<bool> requestNotificationPermission() async{
     return await methodChannel.invokeMethod("requestNotificationPermission");
   }
+
+  @override
+  Future<bool> checkNotificationPermission() async{
+    return await methodChannel.invokeMethod("checkNotificationPermission");
+  }
 }

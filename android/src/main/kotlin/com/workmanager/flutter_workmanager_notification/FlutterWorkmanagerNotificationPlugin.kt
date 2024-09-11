@@ -90,6 +90,19 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
                 ContextCompat.startForegroundService(mApplicationContext, nIntent)
             }
 
+            "checkNotificationPermission"->{
+                mActivity?.let {
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                        result.success(true)
+                    }
+                    if (it.isPermissionGranted(Manifest.permission.POST_NOTIFICATIONS)) {
+                        result.success(true)
+                    } else {
+                        result.success(false)
+                    }
+                }
+            }
+
             "requestNotificationPermission" -> {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
                     result.success(true)
@@ -104,6 +117,11 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
                 }
             }
         }
+    }
+
+
+    private fun Context.isPermissionGranted(permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun launchedActivityFromHistory(intent: Intent?): Boolean {

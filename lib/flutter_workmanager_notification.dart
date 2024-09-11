@@ -42,4 +42,8 @@ class FlutterWorkmanagerNotification {
   Future<bool> requestNotificationPermission()async{
     return await FlutterWorkmanagerNotificationPlatform.instance.requestNotificationPermission();
   }
+
+  Future<bool> checkNotificationPermission()async{
+    return await FlutterWorkmanagerNotificationPlatform.instance.checkNotificationPermission();
+  }
 }

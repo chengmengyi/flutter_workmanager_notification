@@ -143,7 +143,8 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
         mActivity=null
     }
 
-    override fun onRequestPermissionsResult(p0: Int, p1: Array<out String>, p2: IntArray): Boolean {
-
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray): Boolean {
+        Log.e("qwer","kkkk===${requestCode}")
+        return true
     }
 }

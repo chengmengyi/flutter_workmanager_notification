@@ -40,7 +40,7 @@ class MethodChannelFlutterWorkmanagerNotification extends FlutterWorkmanagerNoti
   }
 
   @override
-  Future<void> requestNotificationPermission() async{
+  Future<bool> requestNotificationPermission() async{
     return await methodChannel.invokeMethod("requestNotificationPermission");
   }
 }

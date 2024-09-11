@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
 import androidx.core.app.ActivityCompat
@@ -23,6 +24,7 @@ lateinit var mApplicationContext:Context
 class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, PluginRegistry.NewIntentListener, ActivityAware,PluginRegistry.RequestPermissionsResultListener  {
   private lateinit var channel : MethodChannel
   private var mActivity:Activity?=null
+    private lateinit var result: MethodChannel.Result
 
 
   override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
@@ -32,6 +34,7 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
   }
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
+        this.result=result
         when(call.method){
             "startWorkManager"->{
                 call.arguments?.let {
@@ -144,7 +147,29 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray): Boolean {
-        Log.e("qwer","kkkk===${requestCode}")
+        if(grantResults.isEmpty()){
+            result.success(false)
+            return false
+        }
+        val permission: String
+        val permissionIndex: Int
+        var permissionStatus = false
+        when (requestCode) {
+            1000 -> {
+                permission = Manifest.permission.POST_NOTIFICATIONS
+                permissionIndex = permissions.indexOf(permission)
+                if (permissionIndex >= 0
+                    && grantResults[permissionIndex] == PackageManager.PERMISSION_GRANTED) {
+                    permissionStatus = true
+                } else {
+                    if (mActivity?.shouldShowRequestPermissionRationale(permission) == false) {
+                        permissionStatus = false
+                    }
+                }
+                result.success(permissionStatus)
+            }
+            else -> return false
+        }
         return true
     }
 }

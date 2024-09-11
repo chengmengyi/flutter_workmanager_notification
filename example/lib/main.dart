@@ -53,8 +53,7 @@ class _MyAppState extends State<MyApp> {
               ),
               TextButton(
                 onPressed: ()async{
-                  var result = await requestPermission(permissionList: [Permission.notification]);
-                  print(result);
+                  FlutterWorkmanagerNotification.instance.requestNotificationPermission();
                 },
                 child: Text("获取权限"),
               ),

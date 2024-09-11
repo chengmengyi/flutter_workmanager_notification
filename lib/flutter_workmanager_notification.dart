@@ -38,4 +38,8 @@ class FlutterWorkmanagerNotification {
   })async{
     await FlutterWorkmanagerNotificationPlatform.instance.startForegroundService(id,title,desc);
   }
+
+  Future<void> requestNotificationPermission()async{
+    await FlutterWorkmanagerNotificationPlatform.instance.requestNotificationPermission();
+  }
 }

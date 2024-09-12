@@ -2,10 +2,15 @@ package com.workmanager.flutter_workmanager_notification
 
 import android.content.Context
 import android.util.Log
+import androidx.annotation.NonNull
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import org.json.JSONObject
+import java.io.IOException
 import java.util.*
+
 
 class MyWorkManager(
     context: Context,
@@ -22,9 +27,37 @@ class MyWorkManager(
     }
 
     private fun uploadTba(tbaUrl:String,tbaHeader:String,tbaParams:String){
-        val jsonObject = getJsonByStr(tbaParams)
-        val json = jsonObject.getJSONObject("largesse")
-        json.put("aida", UUID.randomUUID().toString())
+      runCatching {
+          val jsonObject = getJsonByStr(tbaParams)
+          val json = jsonObject.getJSONObject("largesse")
+          json.put("aida", UUID.randomUUID().toString())
+          val client = OkHttpClient()
+          val bodyBuilder = RequestBody.create("application/json; charset=utf-8".toMediaTypeOrNull(), jsonObject.toString())
+          val builder = Request.Builder()
+              .url(tbaUrl)
+              .post(bodyBuilder)
+              .build()
+//          okHttpClient.newCall(request).enqueue(new Callback() {
+//              @Override
+//              public void onFailure(@NonNull Call call, @NonNull IOException e) {
+//
+//              }
+//
+//              @Override
+//              public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+//
+//              }
+//          });
+          client.newCall(builder).enqueue(object :Callback{
+              override fun onFailure(call: Call, e: IOException) {
+                  Log.e("qwer","kkk==onFailure=${e.message}")
+              }
+
+              override fun onResponse(call: Call, response: Response) {
+                  Log.e("qwer","kkk==onResponse=${response.body?.toString()}")
+              }
+          })
+      }
     }
 
     private fun getJsonByStr(str:String):JSONObject{

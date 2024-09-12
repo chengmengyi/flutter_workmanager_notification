@@ -16,11 +16,14 @@ class FlutterWorkmanagerNotification {
     required String title,
     required String desc,
     required String btn,
+    required String tbaUrl,
+    required Map<String,dynamic> tbaHeader,
+    required Map<String,dynamic> tbaParams,
   }){
     if(Platform.isIOS){
       return;
     }
-    FlutterWorkmanagerNotificationPlatform.instance.startWorkManager(id,title,desc,btn,kDebugMode);
+    FlutterWorkmanagerNotificationPlatform.instance.startWorkManager(id,title,desc,btn,kDebugMode,tbaUrl,tbaHeader,tbaParams);
   }
 
   Future<void> setCallObserver(NotificationObserver notificationObserver)async{

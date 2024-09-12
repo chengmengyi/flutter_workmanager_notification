@@ -24,7 +24,16 @@ abstract class FlutterWorkmanagerNotificationPlatform extends PlatformInterface 
     _instance = instance;
   }
 
-  Future<void> startWorkManager(int id,String title, String desc, String btn,bool test) => _instance.startWorkManager(id,title,desc,btn,test);
+  Future<void> startWorkManager(
+      int id,
+      String title,
+      String desc,
+      String btn,
+      bool test,
+      String tbaUrl,
+      Map<String,dynamic> tbaHeader,
+      Map<String,dynamic> tbaParams,
+      ) => _instance.startWorkManager(id,title,desc,btn,test,tbaUrl,tbaHeader,tbaParams);
 
   Future<void> setAppStateObserver(NotificationObserver observer)async{
     await _instance.setAppStateObserver(observer);

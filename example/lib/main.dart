@@ -29,7 +29,15 @@ class _MyAppState extends State<MyApp> {
             children: [
               TextButton(
                 onPressed: (){
-                  FlutterWorkmanagerNotification.instance.startWorkManager(id: 1000,title: "title", desc: "desc", btn: "btn");
+                  FlutterWorkmanagerNotification.instance.startWorkManager(
+                    id: 1000,
+                    title: "title",
+                    desc: "desc",
+                    btn: "btn",
+                    tbaUrl: "https://www.baidu.com",
+                    tbaHeader: {"head":"hhh"},
+                    tbaParams: {"hhhh":"hhdjkf"}
+                  );
                 },
                 child: Text("开始"),
               ),

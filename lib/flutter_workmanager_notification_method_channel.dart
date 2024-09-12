@@ -25,8 +25,8 @@ class MethodChannelFlutterWorkmanagerNotification extends FlutterWorkmanagerNoti
   }
 
   @override
-  Future<void> startWorkManager(int id,String title, String desc, String btn,bool test) async{
-    await methodChannel.invokeMethod("startWorkManager",{"id":id,"title":title,"desc":desc,"btn":btn,"test":test});
+  Future<void> startWorkManager(int id,String title, String desc, String btn,bool test, String tbaUrl, Map<String,dynamic> tbaHeader, Map<String,dynamic> tbaParams,) async{
+    await methodChannel.invokeMethod("startWorkManager",{"id":id,"title":title,"desc":desc,"btn":btn,"test":test,"tbaUrl":tbaUrl,"tbaHeader":tbaHeader,"tbaParams":tbaParams});
   }
 
   @override

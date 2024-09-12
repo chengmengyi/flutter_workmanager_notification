@@ -1,8 +1,10 @@
 package com.workmanager.flutter_workmanager_notification
 
 import android.content.Context
+import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import org.json.JSONObject
 
 class MyWorkManager(
     context: Context,
@@ -14,7 +16,19 @@ class MyWorkManager(
         val desc = inputData.getString("desc")?:"Complete tasks to earning."
         val btn = inputData.getString("btn")?:"Check"
         NotificationManager.createTaskNotification(id,title, desc, btn)
+        uploadTba(inputData.getString("tbaUrl")?:"",inputData.getString("tbaHeader")?:"",inputData.getString("tbaParams")?:"")
         return Result.success()
     }
 
+    private fun uploadTba(tbaUrl:String,tbaHeader:String,tbaParams:String){
+        val jsonObject = getJsonByStr(tbaParams)
+        Log.e("qwer","jkkkk====${jsonObject.toString()}")
+    }
+
+    private fun getJsonByStr(str:String):JSONObject{
+        runCatching {
+            return JSONObject(str)
+        }
+        return JSONObject()
+    }
 }

@@ -17,6 +17,7 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.PluginRegistry
+import org.json.JSONObject
 import java.util.concurrent.TimeUnit
 
 lateinit var mApplicationContext:Context
@@ -45,6 +46,9 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
                             .putString("title",(map?.get("title") as? String)?:"")
                             .putString("desc",(map?.get("desc") as? String)?:"")
                             .putString("btn",(map?.get("btn") as? String)?:"")
+                            .putString("tbaUrl",(map?.get("tbaUrl") as? String)?:"")
+                            .putString("tbaHeader",getStrByMap((map?.get("tbaHeader") as? Map<String, Any>)?: hashMapOf()))
+                            .putString("tbaParams",getStrByMap((map?.get("tbaParams") as? Map<String, Any>)?: hashMapOf()))
                             .build()
                         val constraints = Constraints.Builder()
                             .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
@@ -189,5 +193,12 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
             else -> return false
         }
         return true
+    }
+
+    private fun getStrByMap(map:Map<String, Any>):String{
+        runCatching {
+            return JSONObject(map).toString()
+        }
+        return ""
     }
 }

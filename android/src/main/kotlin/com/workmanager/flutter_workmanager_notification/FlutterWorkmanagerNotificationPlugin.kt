@@ -86,12 +86,14 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
                 }
             }
             "startForegroundService"->{
-                val map = call.arguments as? Map<*, *>
-                val nIntent = Intent(mApplicationContext, ForegroundService::class.java)
-                nIntent.putExtra("id",(map?.get("id") as? Int)?:0)
-                nIntent.putExtra("title",(map?.get("title") as? String)?:"")
-                nIntent.putExtra("desc",(map?.get("desc") as? String)?:"")
-                ContextCompat.startForegroundService(mApplicationContext, nIntent)
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                    val map = call.arguments as? Map<*, *>
+                    val nIntent = Intent(mApplicationContext, ForegroundService::class.java)
+                    nIntent.putExtra("id",(map?.get("id") as? Int)?:0)
+                    nIntent.putExtra("title",(map?.get("title") as? String)?:"")
+                    nIntent.putExtra("desc",(map?.get("desc") as? String)?:"")
+                    ContextCompat.startForegroundService(mApplicationContext, nIntent)
+                }
             }
 
             "checkNotificationPermission"->{

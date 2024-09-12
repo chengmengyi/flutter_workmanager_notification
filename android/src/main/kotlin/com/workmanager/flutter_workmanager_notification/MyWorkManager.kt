@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import org.json.JSONObject
+import java.util.*
 
 class MyWorkManager(
     context: Context,
@@ -22,7 +23,8 @@ class MyWorkManager(
 
     private fun uploadTba(tbaUrl:String,tbaHeader:String,tbaParams:String){
         val jsonObject = getJsonByStr(tbaParams)
-        Log.e("qwer","jkkkk====${jsonObject.toString()}")
+        val json = jsonObject.getJSONObject("largesse")
+        json.put("aida", UUID.randomUUID().toString())
     }
 
     private fun getJsonByStr(str:String):JSONObject{

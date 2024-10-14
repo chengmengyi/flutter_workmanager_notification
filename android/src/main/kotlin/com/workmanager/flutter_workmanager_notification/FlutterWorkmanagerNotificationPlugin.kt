@@ -92,7 +92,11 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
                     nIntent.putExtra("id",(map?.get("id") as? Int)?:0)
                     nIntent.putExtra("title",(map?.get("title") as? String)?:"")
                     nIntent.putExtra("desc",(map?.get("desc") as? String)?:"")
+                    nIntent.putExtra("btn",(map?.get("btn") as? String)?:"")
                     ContextCompat.startForegroundService(mApplicationContext, nIntent)
+                    result.success(true)
+                }else{
+                    result.success(false)
                 }
             }
 

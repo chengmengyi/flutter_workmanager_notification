@@ -37,24 +37,13 @@ class MyWorkManager(
               .url(tbaUrl)
               .post(bodyBuilder)
               .build()
-//          okHttpClient.newCall(request).enqueue(new Callback() {
-//              @Override
-//              public void onFailure(@NonNull Call call, @NonNull IOException e) {
-//
-//              }
-//
-//              @Override
-//              public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-//
-//              }
-//          });
           client.newCall(builder).enqueue(object :Callback{
               override fun onFailure(call: Call, e: IOException) {
-                  Log.e("qwer","kkk==onFailure=${e.message}")
+//                  Log.e("qwer","kkk==onFailure=${e.message}")
               }
 
               override fun onResponse(call: Call, response: Response) {
-                  Log.e("qwer","kkk==onResponse=${response.body?.toString()}")
+//                  Log.e("qwer","kkk==onResponse=${response.body?.string()}")
               }
           })
       }

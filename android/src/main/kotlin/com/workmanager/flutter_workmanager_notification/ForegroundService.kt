@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.IBinder
+import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 
 class ForegroundService:Service() {
@@ -42,6 +43,7 @@ class ForegroundService:Service() {
         val id = intent?.getIntExtra("id", 0)?:0
         val title = intent?.getStringExtra("title")?:""
         val desc = intent?.getStringExtra("desc")?:""
+        val btn = intent?.getStringExtra("btn")?:""
         val intent = getLaunchIntent()?.apply {
             action="click_wordland_foreground_notification"
             putExtra("id",id)
@@ -52,9 +54,17 @@ class ForegroundService:Service() {
             PendingIntent.getActivity(mApplicationContext, 10001, intent, PendingIntent.FLAG_ONE_SHOT)
         }
 
+        val notificationLayout = RemoteViews(mApplicationContext.packageName, R.layout.layout_notification_service)
+        notificationLayout.setTextViewText(R.id.tv_title,title)
+        notificationLayout.setTextViewText(R.id.tv_desc,desc)
+        notificationLayout.setTextViewText(R.id.tv_btn,btn)
+
         val builder = Notification.Builder(this, channelId)
         builder.setOngoing(true)
         builder.setShowWhen(false)
+        builder.setCustomContentView(notificationLayout)
+        builder.setCustomHeadsUpContentView(notificationLayout)
+        builder.setCustomBigContentView(notificationLayout)
         builder.setSmallIcon(R.drawable.logo)
         builder.setContentIntent(pendingIntent)
         builder.setContentTitle(title)

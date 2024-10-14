@@ -30,26 +30,11 @@ object NotificationManager {
             "wordland_channel_$id",
             NotificationManager.IMPORTANCE_MAX
         )
-//        val intent = Intent(quizApp, HomeAc::class.java).apply {
-//            putExtra("intent_random",intentRandom)
-//            putExtra("eventName",eventName)
-////            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-////            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-//        }
-//        val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-//            PendingIntent.getActivity(quizApp, id, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-//        }else{
-//            PendingIntent.getActivity(quizApp, id, intent, PendingIntent.FLAG_ONE_SHOT)
-//        }
 
         val intent = getLaunchIntent()?.apply {
             action="click_wordland_notification"
             putExtra("id",id)
         }
-//        var flags = PendingIntent.FLAG_UPDATE_CURRENT
-//        if (VERSION.SDK_INT >= VERSION_CODES.M) {
-//            flags = flags or PendingIntent.FLAG_IMMUTABLE
-//        }
 
         val pendingIntent = if (VERSION.SDK_INT >= VERSION_CODES.S) {
             PendingIntent.getActivity(mApplicationContext, id, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
@@ -57,14 +42,12 @@ object NotificationManager {
             PendingIntent.getActivity(mApplicationContext, id, intent, PendingIntent.FLAG_ONE_SHOT)
         }
 
-//        val pendingIntent = PendingIntent.getActivity(mApplicationContext, id, intent, flags)
-
         val notification = NotificationCompat.Builder(mApplicationContext, channelId?:"my_channel_$id")
             .setSmallIcon(R.drawable.logo)
             .setStyle(NotificationCompat.DecoratedCustomViewStyle())
             .setCustomContentView(layout)
             .setCustomHeadsUpContentView(layout)
-//            .setCustomBigContentView(largeViews)
+            .setCustomBigContentView(layout)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setAutoCancel(true)

@@ -35,8 +35,8 @@ class MethodChannelFlutterWorkmanagerNotification extends FlutterWorkmanagerNoti
   }
 
   @override
-  Future<void> startForegroundService(int id,String title, String desc,) async{
-    return await methodChannel.invokeMethod("startForegroundService",{"id":id,"title":title,"desc":desc});
+  Future<bool> startForegroundService(int id,String title, String desc,String btn) async{
+    return await methodChannel.invokeMethod("startForegroundService",{"id":id,"title":title,"desc":desc,"btn":btn});
   }
 
   @override

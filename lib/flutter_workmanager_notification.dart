@@ -34,12 +34,13 @@ class FlutterWorkmanagerNotification {
     return FlutterWorkmanagerNotificationPlatform.instance.getAppLaunchNotificationId();
   }
 
-  Future<void> startForegroundService({
+  Future<bool> startForegroundService({
     required int id,
     required String title,
     required String desc,
+    required String btn,
   })async{
-    await FlutterWorkmanagerNotificationPlatform.instance.startForegroundService(id,title,desc);
+    return await FlutterWorkmanagerNotificationPlatform.instance.startForegroundService(id,title,desc,btn);
   }
 
   Future<bool> requestNotificationPermission()async{

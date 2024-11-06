@@ -29,9 +29,9 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
 
 
   override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+      mApplicationContext=flutterPluginBinding.applicationContext
       channel = MethodChannel(flutterPluginBinding.binaryMessenger, "flutter_workmanager_notification")
       channel.setMethodCallHandler(this)
-      mApplicationContext=flutterPluginBinding.applicationContext
   }
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {

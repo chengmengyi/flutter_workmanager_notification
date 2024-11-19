@@ -155,7 +155,8 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
                             .setConstraints(constraints)
                             .setInputData(builder)
                             .build()
-                        WorkManager.getInstance(mApplicationContext).enqueue(periodicWorkRequest)
+
+                        WorkManager.getInstance(mApplicationContext).enqueueUniquePeriodicWork("startBPackageWorkManager",ExistingPeriodicWorkPolicy.KEEP,periodicWorkRequest)
 
 //                            if((map?.get("test") as? Boolean) == true){
 //                                val workRequest=OneTimeWorkRequest

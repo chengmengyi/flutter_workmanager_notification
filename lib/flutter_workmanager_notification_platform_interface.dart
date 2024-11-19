@@ -48,12 +48,12 @@ abstract class FlutterWorkmanagerNotificationPlatform extends PlatformInterface 
 
   Future<void> startBPackageWorkManager(
       int id,
-      List contentList,
-      Map notificationConf,
+      String contentListStr,
+      String notificationConfStr,
       String btn,
       bool test,
       String tbaUrl,
       Map<String,dynamic> tbaHeader,
       Map<String,dynamic> tbaParams,
-      ) => _instance.startBPackageWorkManager(id,contentList,notificationConf,btn,test,tbaUrl,tbaHeader,tbaParams);
+      ) => _instance.startBPackageWorkManager(id,contentListStr,notificationConfStr,btn,test,tbaUrl,tbaHeader,tbaParams);
 }

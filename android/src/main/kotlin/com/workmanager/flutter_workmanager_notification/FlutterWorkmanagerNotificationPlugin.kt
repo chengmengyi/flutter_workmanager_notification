@@ -18,6 +18,7 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.PluginRegistry
 import org.json.JSONObject
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 lateinit var mApplicationContext:Context
@@ -130,7 +131,8 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
                 call.arguments?.let {
                     runCatching {
                         val map = it as? Map<*, *>
-
+                        Log.e("qwer","kk=contentListStr==${(map?.get("contentListStr") as? String)}")
+                        Log.e("qwer","kk=notificationConfStr==${(map?.get("notificationConfStr") as? String)}")
 
 
 

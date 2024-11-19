@@ -52,14 +52,14 @@ class MethodChannelFlutterWorkmanagerNotification extends FlutterWorkmanagerNoti
   @override
   Future<void> startBPackageWorkManager(
       int id,
-      List contentList,
-      Map notificationConf,
+      String contentListStr,
+      String notificationConfStr,
       String btn,
       bool test,
       String tbaUrl,
       Map<String,dynamic> tbaHeader,
       Map<String,dynamic> tbaParams,
       ) async{
-    await methodChannel.invokeMethod("startBPackageWorkManager",{"id":id,"contentList":contentList,"notificationConf":notificationConf,"btn":btn,"test":test,"tbaUrl":tbaUrl,"tbaHeader":tbaHeader,"tbaParams":tbaParams});
+    await methodChannel.invokeMethod("startBPackageWorkManager",{"id":id,"contentListStr":contentListStr,"notificationConfStr":notificationConfStr,"btn":btn,"test":test,"tbaUrl":tbaUrl,"tbaHeader":tbaHeader,"tbaParams":tbaParams});
   }
 }

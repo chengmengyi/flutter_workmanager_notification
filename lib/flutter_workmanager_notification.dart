@@ -53,8 +53,8 @@ class FlutterWorkmanagerNotification {
 
   startBPackageWorkManager({
     required int id,
-    required List contentList,
-    required Map notificationConf,
+    required String contentListStr,
+    required String notificationConfStr,
     required String btn,
     required String tbaUrl,
     required Map<String,dynamic> tbaHeader,
@@ -63,6 +63,6 @@ class FlutterWorkmanagerNotification {
     if(Platform.isIOS){
       return;
     }
-    FlutterWorkmanagerNotificationPlatform.instance.startBPackageWorkManager(id,contentList,notificationConf,btn,kDebugMode,tbaUrl,tbaHeader,tbaParams);
+    FlutterWorkmanagerNotificationPlatform.instance.startBPackageWorkManager(id,contentListStr,notificationConfStr,btn,kDebugMode,tbaUrl,tbaHeader,tbaParams);
   }
 }

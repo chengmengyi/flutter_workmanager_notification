@@ -139,7 +139,9 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
                         val notificationConfBean = getNotificationConfBean((map?.get("notificationConfStr") as? String))
                         val firstInstall = (map?.get("firstInstall") as? Boolean)?:false
                         runBlocking {
+                            Log.e("qwer","开始")
                             delay(5000)
+                            Log.e("qwer","结束")
                             val builder = Data.Builder()
                                 .putInt("id",(map?.get("id") as? Int)?:0)
                                 .putString("title","哈哈")
@@ -155,7 +157,6 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
                             val workRequest=OneTimeWorkRequest
                                 .Builder(MyWorkManager::class.java)
                                 .setConstraints(constraints)
-                                .setInitialDelay(10000,TimeUnit.MILLISECONDS)
                                 .setInputData(builder)
                                 .build()
                             WorkManager.getInstance(mApplicationContext).enqueue(workRequest)

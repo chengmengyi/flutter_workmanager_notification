@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.work.*
@@ -19,6 +18,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.PluginRegistry
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
+import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -133,19 +133,16 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
                 call.arguments?.let {
                     runCatching {
                         val map = it as? Map<*, *>
-                        Log.e("qwer","kk=contentListStr==${(map?.get("contentListStr") as? String)}")
-                        Log.e("qwer","kk=notificationConfStr==${(map?.get("notificationConfStr") as? String)}")
 
-                        val notificationConfBean = getNotificationConfBean((map?.get("notificationConfStr") as? String))
                         val firstInstall = (map?.get("firstInstall") as? Boolean)?:false
+                        val notificationConfBean = getNotificationConfBean((map?.get("notificationConfStr") as? String),firstInstall)
                         runBlocking {
-                            Log.e("qwer","开始")
-                            delay(5000)
-                            Log.e("qwer","结束")
+
+                            delay((notificationConfBean.firstTime).toLong())
+
                             val builder = Data.Builder()
                                 .putInt("id",(map?.get("id") as? Int)?:0)
-                                .putString("title","哈哈")
-                                .putString("desc","描述")
+                                .putString("contentListStr",(map?.get("contentListStr") as? String)?:"")
                                 .putString("btn",(map?.get("btn") as? String)?:"")
                                 .putString("tbaUrl",(map?.get("tbaUrl") as? String)?:"")
                                 .putString("tbaHeader",getStrByMap((map?.get("tbaHeader") as? Map<String, Any>)?: hashMapOf()))
@@ -278,11 +275,12 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
         return ""
     }
 
-    private fun getNotificationConfBean(string: String?):NotificationConfBean{
+    private fun getNotificationConfBean(string: String?, firstInstall: Boolean):NotificationConfBean{
         runCatching {
             val jsonObject = JSONObject(string?:"")
-            return NotificationConfBean(jsonObject.optInt("first_time"),jsonObject.optInt("time_gap"))
+            val firstTime = jsonObject.optInt("first_time")
+            return NotificationConfBean(if(firstInstall) firstTime else 0,jsonObject.optInt("time_gap"))
         }
-        return NotificationConfBean(0,30,)
+        return NotificationConfBean(0, 30)
     }
 }

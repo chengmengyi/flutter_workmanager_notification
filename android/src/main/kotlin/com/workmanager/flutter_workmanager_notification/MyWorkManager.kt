@@ -7,6 +7,7 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 import java.util.*
@@ -16,12 +17,22 @@ class MyWorkManager(
     context: Context,
     workerParams: WorkerParameters,
 ) :Worker(context, workerParams) {
+
+
     override fun doWork(): Result {
+
         val id = inputData.getInt("id",0)
-        val title = inputData.getString("title")?:"Check your account"
-        val desc = inputData.getString("desc")?:"Complete tasks to earning."
+        val contentListStr = inputData.getString("contentListStr")?:""
         val btn = inputData.getString("btn")?:"Check"
-        NotificationManager.createTaskNotification(id,title, desc, btn)
+
+        val list = getNotificationContentList(contentListStr)
+        val contentBean=if(list.isEmpty()){
+            NotificationContentBean("Check your account","Complete tasks to earning.")
+        }else{
+            list.random()
+        }
+
+        NotificationManager.createTaskNotification(id,contentBean.title, contentBean.content, btn)
         uploadTba(inputData.getString("tbaUrl")?:"",inputData.getString("tbaHeader")?:"",inputData.getString("tbaParams")?:"")
         return Result.success()
     }
@@ -54,5 +65,19 @@ class MyWorkManager(
             return JSONObject(str)
         }
         return JSONObject()
+    }
+
+
+    private fun getNotificationContentList(string: String?):ArrayList<NotificationContentBean>{
+        val list= arrayListOf<NotificationContentBean>()
+        runCatching {
+            val array = JSONArray(string ?: "")
+            for (i in 0 until array.length()) {
+                val jsonObject = array.getJSONObject(i)
+                list.add(NotificationContentBean(jsonObject.optString("title"),jsonObject.optString("content")))
+            }
+            return list
+        }
+        return  list
     }
 }

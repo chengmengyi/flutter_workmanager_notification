@@ -55,7 +55,6 @@ class FlutterWorkmanagerNotification {
     required int id,
     required String contentListStr,
     required String notificationConfStr,
-    required bool firstInstall,
     required String btn,
     required String tbaUrl,
     required Map<String,dynamic> tbaHeader,
@@ -64,6 +63,36 @@ class FlutterWorkmanagerNotification {
     if(Platform.isIOS){
       return;
     }
-    FlutterWorkmanagerNotificationPlatform.instance.startBPackageWorkManager(id,contentListStr,notificationConfStr,firstInstall,btn,kDebugMode,tbaUrl,tbaHeader,tbaParams);
+    FlutterWorkmanagerNotificationPlatform.instance.startBPackageWorkManager(id,contentListStr,notificationConfStr,btn,kDebugMode,tbaUrl,tbaHeader,tbaParams);
+  }
+
+  firstInstallSendNotification({
+    required int id,
+    required String title,
+    required String desc,
+    required int firstTime,
+    required String btn,
+    required String tbaUrl,
+    required Map<String,dynamic> tbaHeader,
+    required Map<String,dynamic> tbaParams,
+  }){
+    if(Platform.isIOS){
+      return;
+    }
+    FlutterWorkmanagerNotificationPlatform.instance.firstInstallSendNotification(id,title,desc,firstTime,btn,tbaUrl,tbaHeader,tbaParams);
+  }
+
+  showNotification({
+    required int id,
+    required String contentListStr,
+    required String btn,
+    required String tbaUrl,
+    required Map<String,dynamic> tbaHeader,
+    required Map<String,dynamic> tbaParams,
+  }){
+    if(Platform.isIOS){
+      return;
+    }
+    FlutterWorkmanagerNotificationPlatform.instance.showNotification(id,contentListStr,btn,tbaUrl,tbaHeader,tbaParams);
   }
 }

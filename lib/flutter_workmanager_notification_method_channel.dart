@@ -50,17 +50,42 @@ class MethodChannelFlutterWorkmanagerNotification extends FlutterWorkmanagerNoti
   }
 
   @override
+  Future<void> firstInstallSendNotification(
+      int id,
+      String title,
+      String desc,
+      int firstTime,
+      String btn,
+      String tbaUrl,
+      Map<String,dynamic> tbaHeader,
+      Map<String,dynamic> tbaParams,
+      ) async{
+    await methodChannel.invokeMethod("firstInstallSendNotification",{"id":id,"title":title,"desc":desc,"firstTime":firstTime,"btn":btn,"tbaUrl":tbaUrl,"tbaHeader":tbaHeader,"tbaParams":tbaParams});
+  }
+
+  @override
   Future<void> startBPackageWorkManager(
       int id,
       String contentListStr,
       String notificationConfStr,
-      bool firstInstall,
       String btn,
       bool test,
       String tbaUrl,
       Map<String,dynamic> tbaHeader,
       Map<String,dynamic> tbaParams,
       ) async{
-    await methodChannel.invokeMethod("startBPackageWorkManager",{"id":id,"contentListStr":contentListStr,"notificationConfStr":notificationConfStr,"firstInstall":firstInstall,"btn":btn,"test":test,"tbaUrl":tbaUrl,"tbaHeader":tbaHeader,"tbaParams":tbaParams});
+    await methodChannel.invokeMethod("startBPackageWorkManager",{"id":id,"contentListStr":contentListStr,"notificationConfStr":notificationConfStr,"btn":btn,"test":test,"tbaUrl":tbaUrl,"tbaHeader":tbaHeader,"tbaParams":tbaParams});
+  }
+
+  @override
+  Future<void> showNotification(
+      int id,
+      String contentListStr,
+      String btn,
+      String tbaUrl,
+      Map<String,dynamic> tbaHeader,
+      Map<String,dynamic> tbaParams,
+      ) async{
+    await methodChannel.invokeMethod("showNotification",{"id":id,"contentListStr":contentListStr,"btn":btn,"tbaUrl":tbaUrl,"tbaHeader":tbaHeader,"tbaParams":tbaParams});
   }
 }

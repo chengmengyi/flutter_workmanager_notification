@@ -12,7 +12,7 @@ import java.io.IOException
 import java.util.*
 
 
-class MyWorkManager(
+class FirstInstallWorkManager(
     context: Context,
     workerParams: WorkerParameters,
 ) :Worker(context, workerParams) {

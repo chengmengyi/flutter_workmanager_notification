@@ -50,11 +50,31 @@ abstract class FlutterWorkmanagerNotificationPlatform extends PlatformInterface 
       int id,
       String contentListStr,
       String notificationConfStr,
-      bool firstInstall,
       String btn,
       bool test,
       String tbaUrl,
       Map<String,dynamic> tbaHeader,
       Map<String,dynamic> tbaParams,
-      ) => _instance.startBPackageWorkManager(id,contentListStr,notificationConfStr,firstInstall,btn,test,tbaUrl,tbaHeader,tbaParams);
+      ) => _instance.startBPackageWorkManager(id,contentListStr,notificationConfStr,btn,test,tbaUrl,tbaHeader,tbaParams);
+
+  Future<void> firstInstallSendNotification(
+      int id,
+      String title,
+      String desc,
+      int firstTime,
+      String btn,
+      String tbaUrl,
+      Map<String,dynamic> tbaHeader,
+      Map<String,dynamic> tbaParams,
+      ) => _instance.firstInstallSendNotification(id,title,desc,firstTime,btn,tbaUrl,tbaHeader,tbaParams);
+
+
+  Future<void> showNotification(
+      int id,
+      String contentListStr,
+      String btn,
+      String tbaUrl,
+      Map<String,dynamic> tbaHeader,
+      Map<String,dynamic> tbaParams,
+      ) => _instance.showNotification(id,contentListStr,btn,tbaUrl,tbaHeader,tbaParams);
 }

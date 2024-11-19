@@ -29,7 +29,12 @@ class MyWorkManager(
         val contentBean=if(list.isEmpty()){
             NotificationContentBean("Check your account","Complete tasks to earning.")
         }else{
-            list.random()
+            var index = getLocalNotificationIndex()+1
+            if(index>=list.size){
+                index=0
+            }
+            list[index]
+            writeLocalNotificationIndex(index+1)
         }
 
         NotificationManager.createTaskNotification(id,contentBean.title, contentBean.content, btn)
@@ -79,5 +84,14 @@ class MyWorkManager(
             return list
         }
         return  list
+    }
+
+    private fun getLocalNotificationIndex()=applicationContext.getSharedPreferences("wordland",Context.MODE_PRIVATE).getInt("index",0)
+
+    private fun writeLocalNotificationIndex(index:Int){
+        applicationContext.getSharedPreferences("wordland", Context.MODE_PRIVATE).edit().apply {
+            putInt("index",index)
+            apply()
+        }
     }
 }

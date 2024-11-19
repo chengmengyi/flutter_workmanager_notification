@@ -33,8 +33,8 @@ class MyWorkManager(
             if(index>=list.size){
                 index=0
             }
-            list[index]
             writeLocalNotificationIndex(index+1)
+            list[index]
         }
 
         NotificationManager.createTaskNotification(id,contentBean.title, contentBean.content, btn)

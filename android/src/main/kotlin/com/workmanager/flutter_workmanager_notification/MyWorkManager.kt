@@ -29,7 +29,7 @@ class MyWorkManager(
         val contentBean=if(list.isEmpty()){
             NotificationContentBean("Check your account","Complete tasks to earning.")
         }else{
-            var index = getLocalNotificationIndex()+1
+            var index = getLocalNotificationIndex()
             if(index>=list.size){
                 index=0
             }

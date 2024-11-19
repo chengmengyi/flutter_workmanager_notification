@@ -45,4 +45,15 @@ abstract class FlutterWorkmanagerNotificationPlatform extends PlatformInterface 
 
   Future<bool> requestNotificationPermission() => _instance.requestNotificationPermission();
   Future<bool> checkNotificationPermission() => _instance.checkNotificationPermission();
+
+  Future<void> startBPackageWorkManager(
+      int id,
+      List contentList,
+      Map notificationConf,
+      String btn,
+      bool test,
+      String tbaUrl,
+      Map<String,dynamic> tbaHeader,
+      Map<String,dynamic> tbaParams,
+      ) => _instance.startBPackageWorkManager(id,contentList,notificationConf,btn,test,tbaUrl,tbaHeader,tbaParams);
 }

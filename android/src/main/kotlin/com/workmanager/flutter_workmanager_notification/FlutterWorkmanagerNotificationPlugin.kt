@@ -126,6 +126,47 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
                     )
                 }
             }
+            "startBPackageWorkManager"->{
+                call.arguments?.let {
+                    runCatching {
+                        val map = it as? Map<*, *>
+
+
+
+
+                        
+//                        val builder = Data.Builder()
+//                                .putInt("id",(map?.get("id") as? Int)?:0)
+//                                .putString("title",(map?.get("title") as? String)?:"")
+//                                .putString("desc",(map?.get("desc") as? String)?:"")
+//                                .putString("btn",(map?.get("btn") as? String)?:"")
+//                                .putString("tbaUrl",(map?.get("tbaUrl") as? String)?:"")
+//                                .putString("tbaHeader",getStrByMap((map?.get("tbaHeader") as? Map<String, Any>)?: hashMapOf()))
+//                                .putString("tbaParams",getStrByMap((map?.get("tbaParams") as? Map<String, Any>)?: hashMapOf()))
+//                                .build()
+//                        val constraints = Constraints.Builder()
+//                                .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
+//                                .setRequiresBatteryNotLow(true).build()
+//
+//                        if((map?.get("test") as? Boolean) == true){
+//                            val workRequest=OneTimeWorkRequest
+//                                    .Builder(MyWorkManager::class.java)
+//                                    .setConstraints(constraints)
+//                                    .setInitialDelay(10000,TimeUnit.MILLISECONDS)
+//                                    .setInputData(builder)
+//                                    .build()
+//                            WorkManager.getInstance(mApplicationContext).enqueue(workRequest)
+//                        }else{
+//                            val periodicWorkRequest = PeriodicWorkRequest
+//                                    .Builder(MyWorkManager::class.java, 6, TimeUnit.HOURS)
+//                                    .setConstraints(constraints)
+//                                    .setInputData(builder)
+//                                    .build()
+//                            WorkManager.getInstance(mApplicationContext).enqueue(periodicWorkRequest)
+//                        }
+                    }
+                }
+            }
         }
     }
 

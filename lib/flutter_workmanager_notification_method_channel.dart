@@ -48,4 +48,18 @@ class MethodChannelFlutterWorkmanagerNotification extends FlutterWorkmanagerNoti
   Future<bool> checkNotificationPermission() async{
     return await methodChannel.invokeMethod("checkNotificationPermission");
   }
+
+  @override
+  Future<void> startBPackageWorkManager(
+      int id,
+      List contentList,
+      Map notificationConf,
+      String btn,
+      bool test,
+      String tbaUrl,
+      Map<String,dynamic> tbaHeader,
+      Map<String,dynamic> tbaParams,
+      ) async{
+    await methodChannel.invokeMethod("startBPackageWorkManager",{"id":id,"contentList":contentList,"notificationConf":notificationConf,"btn":btn,"test":test,"tbaUrl":tbaUrl,"tbaHeader":tbaHeader,"tbaParams":tbaParams});
+  }
 }

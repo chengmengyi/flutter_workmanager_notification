@@ -50,4 +50,19 @@ class FlutterWorkmanagerNotification {
   Future<bool> checkNotificationPermission()async{
     return await FlutterWorkmanagerNotificationPlatform.instance.checkNotificationPermission();
   }
+
+  startBPackageWorkManager({
+    required int id,
+    required List contentList,
+    required Map notificationConf,
+    required String btn,
+    required String tbaUrl,
+    required Map<String,dynamic> tbaHeader,
+    required Map<String,dynamic> tbaParams,
+  }){
+    if(Platform.isIOS){
+      return;
+    }
+    FlutterWorkmanagerNotificationPlatform.instance.startBPackageWorkManager(id,contentList,notificationConf,btn,kDebugMode,tbaUrl,tbaHeader,tbaParams);
+  }
 }

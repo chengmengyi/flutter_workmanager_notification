@@ -157,7 +157,6 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
                             .setInputData(builder)
                             .build()
 
-                        Log.e("qwer","kkkkk")
                         WorkManager.getInstance(mApplicationContext).enqueueUniquePeriodicWork("startBPackageWorkManager",ExistingPeriodicWorkPolicy.KEEP,periodicWorkRequest)
 
 //                            if((map?.get("test") as? Boolean) == true){
@@ -197,7 +196,7 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
                         val constraints = Constraints.Builder()
                             .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
                             .setRequiresBatteryNotLow(true).build()
-
+                        Log.e("qwer","kkkk====${firstTime}")
                         val workRequest=OneTimeWorkRequest
                             .Builder(FirstInstallWorkManager::class.java)
                             .setConstraints(constraints)

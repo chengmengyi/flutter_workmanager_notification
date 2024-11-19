@@ -17,6 +17,8 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.PluginRegistry
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -134,6 +136,30 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
                         Log.e("qwer","kk=contentListStr==${(map?.get("contentListStr") as? String)}")
                         Log.e("qwer","kk=notificationConfStr==${(map?.get("notificationConfStr") as? String)}")
 
+                        val notificationConfBean = getNotificationConfBean((map?.get("notificationConfStr") as? String))
+                        val firstInstall = (map?.get("firstInstall") as? Boolean)?:false
+                        runBlocking {
+                            delay(5000)
+                            val builder = Data.Builder()
+                                .putInt("id",(map?.get("id") as? Int)?:0)
+                                .putString("title","哈哈")
+                                .putString("desc","描述")
+                                .putString("btn",(map?.get("btn") as? String)?:"")
+                                .putString("tbaUrl",(map?.get("tbaUrl") as? String)?:"")
+                                .putString("tbaHeader",getStrByMap((map?.get("tbaHeader") as? Map<String, Any>)?: hashMapOf()))
+                                .putString("tbaParams",getStrByMap((map?.get("tbaParams") as? Map<String, Any>)?: hashMapOf()))
+                                .build()
+                        val constraints = Constraints.Builder()
+                                .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
+                                .setRequiresBatteryNotLow(true).build()
+                            val workRequest=OneTimeWorkRequest
+                                .Builder(MyWorkManager::class.java)
+                                .setConstraints(constraints)
+                                .setInitialDelay(10000,TimeUnit.MILLISECONDS)
+                                .setInputData(builder)
+                                .build()
+                            WorkManager.getInstance(mApplicationContext).enqueue(workRequest)
+                        }
 
 
                         
@@ -249,5 +275,13 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
             return JSONObject(map).toString()
         }
         return ""
+    }
+
+    private fun getNotificationConfBean(string: String?):NotificationConfBean{
+        runCatching {
+            val jsonObject = JSONObject(string?:"")
+            return NotificationConfBean(jsonObject.optInt("first_time"),jsonObject.optInt("time_gap"))
+        }
+        return NotificationConfBean(0,30,)
     }
 }

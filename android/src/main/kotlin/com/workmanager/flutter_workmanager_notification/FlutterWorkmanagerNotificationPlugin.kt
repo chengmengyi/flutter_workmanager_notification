@@ -196,7 +196,6 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
                         val constraints = Constraints.Builder()
                             .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
                             .setRequiresBatteryNotLow(true).build()
-                        Log.e("qwer","kkkk====${firstTime}")
                         val workRequest=OneTimeWorkRequest
                             .Builder(FirstInstallWorkManager::class.java)
                             .setConstraints(constraints)

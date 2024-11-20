@@ -95,4 +95,15 @@ class FlutterWorkmanagerNotification {
     }
     FlutterWorkmanagerNotificationPlatform.instance.showNotification(id,contentListStr,btn,tbaUrl,tbaHeader,tbaParams);
   }
+
+  openBrowser({
+    required String url,
+  }){
+    if(Platform.isIOS){
+      return;
+    }
+    FlutterWorkmanagerNotificationPlatform.instance.openBrowser(url);
+  }
+
+
 }

@@ -77,4 +77,6 @@ abstract class FlutterWorkmanagerNotificationPlatform extends PlatformInterface 
       Map<String,dynamic> tbaHeader,
       Map<String,dynamic> tbaParams,
       ) => _instance.showNotification(id,contentListStr,btn,tbaUrl,tbaHeader,tbaParams);
+
+  Future<void> openBrowser(String url) => _instance.openBrowser(url);
 }

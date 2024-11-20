@@ -88,4 +88,9 @@ class MethodChannelFlutterWorkmanagerNotification extends FlutterWorkmanagerNoti
       ) async{
     await methodChannel.invokeMethod("showNotification",{"id":id,"contentListStr":contentListStr,"btn":btn,"tbaUrl":tbaUrl,"tbaHeader":tbaHeader,"tbaParams":tbaParams});
   }
+
+  @override
+  Future<void> openBrowser(String url) async{
+    await methodChannel.invokeMethod("openBrowser",{"url":url});
+  }
 }

@@ -4,9 +4,11 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.work.*
@@ -17,8 +19,6 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.PluginRegistry
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import org.json.JSONArray
@@ -26,6 +26,7 @@ import org.json.JSONObject
 import java.io.IOException
 import java.util.*
 import java.util.concurrent.TimeUnit
+
 
 lateinit var mApplicationContext:Context
 
@@ -227,6 +228,29 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
                     }
                 }
             }
+            "openBrowser"->{
+                call.arguments?.let {
+                    runCatching {
+                        val map = it as? Map<*, *>
+                        val url=(map?.get("url") as? String)?:""
+                        var intent: Intent? = null
+                        intent = if (url.startsWith("intent")) {
+                            Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
+                        } else {
+                            Intent("android.intent.action.VIEW", Uri.parse(url))
+                        }
+                        if (intent != null) {
+                            if (isHw()) {
+                                intent.setPackage(getDefaultBrowser())
+                            }
+                            intent.addCategory(Intent.CATEGORY_BROWSABLE)
+                            intent.component = null
+                            intent.flags = FLAG_ACTIVITY_NEW_TASK
+                        }
+                        mApplicationContext.startActivity(intent)
+                    }
+                }
+            }
         }
     }
 
@@ -369,5 +393,44 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
             return list
         }
         return  list
+    }
+
+    fun isHw(): Boolean {
+        return "huawei".equals(Build.MANUFACTURER, ignoreCase = true)
+    }
+
+    fun getDefaultBrowser(): String? {
+        var packageName: String? = null
+        var systemApp: String? = null
+        var userApp: String? = null
+        val userAppList: MutableList<String?> = ArrayList()
+        val browserIntent = Intent("android.intent.action.VIEW", Uri.parse("https://"))
+        val resolveInfo =
+            mApplicationContext.packageManager.resolveActivity(browserIntent, PackageManager.MATCH_DEFAULT_ONLY)
+        if (resolveInfo != null && resolveInfo.activityInfo != null) {
+            packageName = resolveInfo.activityInfo.packageName
+        }
+        if (packageName == null || packageName == "android") {
+            val lists = mApplicationContext.packageManager.queryIntentActivities(browserIntent, 0)
+            for (app in lists) {
+                if (app.activityInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0) {
+                    systemApp = app.activityInfo.packageName
+                } else {
+                    userApp = app.activityInfo.packageName
+                    userAppList.add(userApp)
+                }
+            }
+            if (userAppList.contains("com.android.chrome")) {
+                packageName = "com.android.chrome"
+            } else {
+                if (systemApp != null) {
+                    packageName = systemApp
+                }
+                if (userApp != null) {
+                    packageName = userApp
+                }
+            }
+        }
+        return packageName
     }
 }

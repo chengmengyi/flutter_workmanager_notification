@@ -151,14 +151,24 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
                             .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
                             .setRequiresBatteryNotLow(true).build()
 
-                        val timeGap = notificationConfBean.timeGap
-                        val periodicWorkRequest = PeriodicWorkRequest
-                            .Builder(MyWorkManagerBPackage::class.java, if(timeGap<15) 15 else timeGap.toLong(), TimeUnit.MINUTES)
+//                        val timeGap = notificationConfBean.timeGap
+//                        val periodicWorkRequest = PeriodicWorkRequest
+//                            .Builder(MyWorkManagerBPackage::class.java, if(timeGap<15) 15 else timeGap.toLong(), TimeUnit.MINUTES)
+//                            .setConstraints(constraints)
+//                            .setInputData(builder)
+//                            .build()
+//
+//                        WorkManager.getInstance(mApplicationContext).enqueueUniquePeriodicWork("startBPackageWorkManager",ExistingPeriodicWorkPolicy.KEEP,periodicWorkRequest)
+
+
+                        val workRequest=OneTimeWorkRequest
+                            .Builder(MyWorkManagerBPackage::class.java)
                             .setConstraints(constraints)
                             .setInputData(builder)
                             .build()
 
-                        WorkManager.getInstance(mApplicationContext).enqueueUniquePeriodicWork("startBPackageWorkManager",ExistingPeriodicWorkPolicy.KEEP,periodicWorkRequest)
+                        WorkManager.getInstance(mApplicationContext).enqueueUniquePeriodicWork("startBPackageWorkManager",ExistingPeriodicWorkPolicy.KEEP,workRequest)
+
 
 //                            if((map?.get("test") as? Boolean) == true){
 //                                val workRequest=OneTimeWorkRequest

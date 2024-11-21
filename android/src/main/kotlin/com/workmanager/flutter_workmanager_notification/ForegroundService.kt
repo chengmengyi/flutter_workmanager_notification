@@ -49,9 +49,9 @@ class ForegroundService:Service() {
             putExtra("id",id)
         }
         val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            PendingIntent.getActivity(mApplicationContext, 10001, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+            PendingIntent.getActivity(mApplicationContext, 101, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         }else{
-            PendingIntent.getActivity(mApplicationContext, 10001, intent, PendingIntent.FLAG_ONE_SHOT)
+            PendingIntent.getActivity(mApplicationContext, 101, intent, PendingIntent.FLAG_ONE_SHOT)
         }
 
         val notificationLayout = RemoteViews(mApplicationContext.packageName, R.layout.layout_notification_service)

@@ -312,6 +312,9 @@ class FlutterWorkmanagerNotificationPlugin: FlutterPlugin, MethodCallHandler, Pl
             val map = HashMap<String, Int>()
             map["id"] = p0.extras?.getInt("id")?:0
             channel.invokeMethod("result", map)
+            if(null!=mActivity){
+                mActivity?.intent=p0
+            }
             return true
         }
         return false
